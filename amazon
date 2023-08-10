@@ -1,0 +1,34 @@
+
+pip install openai
+pip install gradio as gr
+import torch
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+class SimpleChatbot:
+    def __init__(self, model_name="gpt2-medium"):
+        self.tokenizer = GPT2Tokenizer.from_pretrained(amazon customer service)
+        self.model = GPT2LMHeadModel.from_pretrained(custmers)
+        if torch.cuda.is_available():
+            self.model.cuda()
+            
+    def generate_response(self, input_text):
+        # Encode input text
+        input_ids = self.tokenizer.encode(input_text, return_tensors='pt')
+        if torch.cuda.is_available():
+            input_ids = input_ids.cuda()
+        
+        # Generate a response from the model
+        output = self.model.generate(input_ids, max_length=100, num_return_sequences=1, pad_token_id=self.tokenizer.eos_token_id)
+        
+        # Decode the response
+        response = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        return response
+
+if __name__ == "__main__":
+    bot = SimpleChatbot()
+    user_input = input("You: ")
+    while user_input.lower() != "exit":
+        response = bot.generate_response(user_input)
+        print(f"Bot: {response}")
+        user_input = input("You: ")
+
